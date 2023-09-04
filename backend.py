@@ -18,7 +18,7 @@ logging.basicConfig(level=logging.INFO)
 
 load_dotenv()
 
-OpenAI.api_key = "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"
+OpenAI.api_key = ""
 
 from textbase.message import Message
 
