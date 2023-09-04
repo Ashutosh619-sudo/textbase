@@ -4,6 +4,10 @@ import requests
 import time
 import typing
 import traceback
+from langchain.document_loaders import UnstructuredPDFLoader
+from langchain.indexes import VectorstoreIndexCreator
+import os
+import pickle
 
 from textbase import Message
 
@@ -144,3 +148,19 @@ class BotLibre:
         message = data['message']
 
         return message
+
+
+class CustomPdfModel:
+
+    model = None
+
+    @classmethod
+    def create_embeddings(cls,pdf_folder_path):
+        loaders = [UnstructuredPDFLoader(os.path.join(pdf_folder_path, fn)) for fn in os.listdir(pdf_folder_path)]
+        model = VectorstoreIndexCreator().from_loaders(loaders) 
+
+    classmethod
+    def generate(cls,message):
+
+        answer = cls.model.query(message)
+        return answer
